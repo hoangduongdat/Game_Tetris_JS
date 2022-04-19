@@ -1,0 +1,471 @@
+:root {
+    --bg-color: #ecf0f3;
+    --wrapper-shadow: -10px 10px 20px #dbdfe2, 10px -10px 20px #fdffff;
+    --btn-shadow: -5px 5px 10px #c4c7ca, 5px -5px 10px #ffffff;
+    --btn-shadow-inset: inset -5px 5px 10px #c4c7ca, inset 5px -5px 10px #ffffff;
+    --board-shadow-inset: inset -5px 5px 8px #d4d8db, inset 5px -5px 8px #ffffff;
+
+    --color: #243441;
+    --border-radius: 20px;
+    --setting-btn-color: #f88ab0;
+    --block-size: 25px;
+    --button-size: 55px;
+    --game-width: 414px;
+    --game-height: 736px;
+}
+
+.dark {
+    --bg-color: #243441;
+    --color: #0affef;
+    --setting-btn-color: #f88ab0;
+    --wrapper-shadow: -10px 10px 10px #1f2d39, 10px -10px 10px #293b49;
+    --btn-shadow: -5px 5px 10px #1f2d39, 5px -5px 10px #293b49;
+    --btn-shadow-inset: inset -5px 5px 10px #1f2d39, inset 5px -5px 10px #293b49;
+    --board-shadow-inset: inset -5px 5px 8px #21303c, inset 5px -5px 8px #273846;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    font-family: "Krona One", sans-serif;
+    height: 100vh;
+    background-color: var(--bg-color);
+    overflow: hidden;
+    user-select: none;
+}
+
+button {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.container {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-color);
+  
+
+}
+
+.game-wrapper {
+    position: relative;
+    z-index: 99;
+    width: 100%;
+    max-width: var(--game-width);
+    height: 100%;
+    max-height: var(--game-height);
+    background-color: var(--bg-color);
+    box-shadow: var(--wrapper-shadow);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.info-section {
+    position: relative;
+    text-align: center;
+    font-weight: 600;
+    padding: 20px;
+    font-size: 25px;
+    color: var(--color);
+}
+
+.info-section #level {
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    left: 30px;
+    font-size: 18px;
+}
+
+.board-section {
+    display: grid;
+    grid-template-columns:  repeat(10, 1fr);
+    margin : auto;
+    padding: 10px;
+    box-shadow: var(--board-shadow-inset);
+    border-radius: 10px;
+}
+
+.board-section .block {
+    width: var(--block-size);
+    height: var(--block-size);
+    border: 0.1px solid #ccc;
+    
+}
+
+
+.setting-section {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+
+}
+
+.setting-section button {
+    margin: 0 10px;
+    color: var(--setting-btn-color);
+}
+.bxs-moon {
+    display: block;
+}
+
+.bxs-sun {
+    display: none;
+}
+
+.btn {
+    width: var(--button-size);
+    height: var(--button-size);
+    box-shadow: var(--btn-shadow);
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 30px;
+    color: var(--color);
+    border: none;
+    outline: none;
+    background: var(--bg-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+
+.btn-large {
+    width: 80px !important;
+    height: 80px !important;
+    font-size: 30px;
+}
+
+.btn:active {
+    box-shadow: var(--btn-shadow-inset);
+}
+
+.control-section {
+    display: none;
+}
+
+.col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.col:nth-child(1) {
+    width: 40%;
+}
+
+.col:nth-child(2) {
+    width: 60%;
+}
+
+.arrow-control {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.menu-section {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.menu-section .brand {
+    text-align: center;
+    padding: 40px;
+    color: var(--color);
+}
+
+.menu-section .brand h2 {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.menu-section button {
+    margin-bottom: 30px;
+}
+
+.btn-width {
+    width: 200px !important;
+}
+
+.result {
+    text-align: center;
+    margin-bottom: 90px;
+    display: none;
+}
+.result >p {
+    color: var(--setting-btn-color);
+}
+
+.result >h1  {
+    color: var(--color);
+    margin-bottom: 30px;
+}
+
+
+.how-to {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(100%,-50%);
+    box-shadow: var(--wrapper-shadow);
+    padding: 30px;
+    border-radius: 20px;
+    background-color: var(--bg-color);
+    transition: transform .5s  ease-in-out;
+    color: var(--color);
+    display: none;
+
+}
+
+.how-to h3 {
+    margin-bottom: 30px;
+}
+
+.how-to td {
+    padding: 20px;
+}
+
+.keycap {
+    width: calc( var(--button-size) * 2);
+    color: var(--setting-btn-color);
+    font-size: 20px;
+}
+
+
+
+/* images fall effect */
+.container img.fall {
+    position: absolute;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity:1;
+    }
+    100% {
+        transform: translateY(2000%) rotate(90deg);
+        opacity: 1;
+    }
+}
+
+/* end images fall effect */
+
+
+/* loading */
+.loading {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    background-color: var(--bg-color);
+    z-index: 100;
+    animation: hide .5s linear forwards;
+    animation-delay: 2.7s;
+}
+
+.loading .square {
+    display: grid;
+    grid-template-columns:  repeat(4,1fr);
+    width: calc(var(--block-size) * 4);
+    height: calc(var(--block-size) * 4);
+    overflow: hidden;
+    animation: rotate .5s linear forwards;
+    animation-delay: 2.2s;
+}
+.loading .square div {
+    width: var(--block-size);
+    height: var(--block-size);
+    border: 1px solid var(--bg-color);
+    background-color: var(--color);
+    animation: down .5s linear forwards;
+    transform: translateY(-500%);
+   
+}
+
+/* L block */
+.loading .square div:nth-child(5),
+.loading .square div:nth-child(9),
+.loading .square div:nth-child(13),
+.loading .square div:nth-child(14) {
+    background-color: var(--setting-btn-color);
+}
+/* end L block */
+/* S block */
+.loading .square div:nth-child(6),
+.loading .square div:nth-child(10),
+.loading .square div:nth-child(11),
+.loading .square div:nth-child(15) {
+    background-color: #e1b12c;
+    animation-delay: .5s;
+
+}
+/* end S block */
+
+/* J block */
+.loading .square div:nth-child(1),
+.loading .square div:nth-child(2),
+.loading .square div:nth-child(3),
+.loading .square div:nth-child(7) {
+    background-color: #00cec9;
+    animation-delay: 1.5s;
+
+}
+/* end J block */
+/* I block */
+.loading .square div:nth-child(4),
+.loading .square div:nth-child(8),
+.loading .square div:nth-child(12),
+.loading .square div:nth-child(16) {
+    background-color: #c23616;
+    animation-delay: 1s;
+
+}
+/* end I block */
+
+@keyframes down {
+    0%{
+        transform: translateY(-300%);
+    }
+    100%{
+        transform: translateY(0);
+
+    }
+}
+@keyframes rotate {
+    0%{
+        transform: rotate(0);
+    }
+    100%{
+        transform: rotate(90deg);
+
+    }
+}
+@keyframes hide {
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+        visibility: hidden;
+
+    }
+}
+
+/*end loading */
+
+/* state */
+.board-section,
+.info-section,
+.control-section {
+    transform: scale(0);
+}
+.play .board-section,
+.play .info-section,
+.play .control-section {
+    transform: scale(1);
+}
+
+
+
+.play #btn-pause {
+    display: block;
+}
+.dark .bxs-moon {
+    display: none;
+}
+.dark .bxs-sun {
+    display: block;
+}
+
+.play .menu-section {
+    transform: scale(0);
+}
+
+.how-to.active {
+    display: block;
+    transform: translate(0,-50%);
+}
+
+.pause #btn-new-game ,
+.end #btn-new-game{
+    display: block;
+}
+
+.end .result {
+    display: block;
+}
+
+.end #btn-play {
+    display: none;
+}
+
+#btn-new-game,
+#btn-pause {
+    display: none;
+}
+
+/* end state */
+
+
+
+
+@media only screen and (max-width: 425px) {
+    :root {
+        --block-size: 20px;
+    }
+    .game-wrapper {
+        box-shadow: unset;
+        border-radius: unset;
+        padding-bottom: 10px;
+    }
+
+    .setting-section {
+        padding: unset;
+        margin-top: -80px;
+        
+    }
+
+    .play .setting-section {
+        position: absolute;
+        flex-direction: column;
+        bottom: unset;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 2px;
+    }
+
+    .setting-section button {
+        margin-bottom: 15px;
+    }
+
+    .control-section{
+        display: flex;
+    }
+    .how-to,
+    #btn-help {
+        display: none;
+    }
+}

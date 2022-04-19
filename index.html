@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./static/assets/images/favion.png">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./static/css/app.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- MAIN GAME -->
+    <div class="container">
+        <div class="game-wrapper">
+            <div class="info-section">
+                <span id="score">
+                    1234567
+                </span>
+                <span id="level">
+                    lv. 1
+                </span>
+            </div>
+            <div class="board-section"></div>
+            <!-- button control -->
+            <div class="control-section">
+                <div class="col ">
+                    <button class="btn btn-large">
+                        <i class="bx bxs-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="col">
+                    <div class="arrow-control">
+                        <div></div>
+                        <button class="btn" id="btn-up">
+                            <i class="bx bx-rotate-left"></i>
+                        </button>
+                        <div></div>
+                        <button class="btn" id="btn-left">
+                            <i class="bx bx-chevron-left"></i>
+                        </button>
+                        <div></div>
+                        <button class="btn" id="btn-right">
+                            <i class="bx bx-chevron-right"></i>
+                        </button>
+                        <div></div>
+                        <button class="btn" id="btn-down">
+                            <i class="bx bx-chevron-down"></i>
+                        </button>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+            <!-- end button control -->
+            <!-- setting-section -->
+            <div class="setting-section">
+                <button class="btn" id="btn-pause">
+                    <i class="bx bx-pause"></i>
+                </button>
+                <button class="btn" id="btn-theme">
+                    <i class="bx bxs-moon"></i>
+                    <i class="bx bxs-sun"></i>
+                </button>
+                <button class="btn" id="btn-help">
+                    <i class="bx bx-question-mark"></i>
+                </button>
+            </div>
+            <!-- end setting-section -->
+            <!-- menu-section -->
+            <div class="menu-section">
+                <div class="brand">
+                    <h2>AT</h2>
+                    <span>Gaming</span>
+                </div>
+                <div class="result">
+                    <h1>GAME OVER</h1>
+                    <p>level</p>
+                    <h1 id="result-level"> 1 </h1>
+                    <p>Score</p>
+                    <h1 id="result-score">12345</h1>
+                </div>
+                <button class="btn btn-width" id="btn-play">Play</button>
+                <button class="btn btn-width" id="btn-new-game">New Game</button>
+            </div>
+            <!-- end menu-section -->
+        </div>
+    </div>
+    <!-- END MAIN GAME -->
+
+    <!-- Help Section -->
+    <div class="how-to">
+        <h3>KEYBOARD CONTROL</h3>
+        <table>
+            <tr>
+                <td>
+                    <button class="btn keycap">
+                        <i class="bx bxs-chevron-left"></i>
+                    </button>
+                </td>
+                <td>Move left</td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn keycap">
+                        <i class="bx bxs-chevron-right"></i>
+                    </button>
+                </td>
+                <td>Move right</td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn keycap">
+                        <i class="bx bxs-chevron-down"></i>
+                    </button>
+                </td>
+                <td>Move down</td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn keycap">
+                        <i class="bx bxs-chevron-up"></i>
+                    </button>
+                </td>
+                <td>Move rotate</td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn keycap">
+                        Space
+                    </button>
+                </td>
+                <td>Hard drop</td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn keycap">
+                        P
+                    </button>
+                </td>
+                <td>Pause/Resume game</td>
+            </tr>
+
+        </table>
+    </div>
+    <!-- END Help Section -->
+
+    <!-- loading -->
+    <div class="loading">
+        <div class="square"></div>
+    </div>
+    <!-- end loading -->
+
+
+
+
+
+
+
+
+    <script type="text/javascript" src="./static/js/app.js"></script>
+    <script type="text/javascript" src="./static/js/game.js"></script>
+
+</body>
+
+</html>
