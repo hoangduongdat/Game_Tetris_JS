@@ -40,10 +40,10 @@ falls = () => {
     }
 }
 
-falls()
+// falls()
 
-let loading_square = document.querySelector('.square')
+// let loading_square = document.querySelector('.square')
 
-for (let i = 0; i < 16; i++) {
-    loading_square.innerHTML += '<div></div>'
-}
+// for (let i = 0; i < 16; i++) {
+//     loading_square.innerHTML += '<div></div>'
+// }
