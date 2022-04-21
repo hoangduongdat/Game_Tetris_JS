@@ -32,7 +32,7 @@ newGrid = (width, height) => {
 resetGrid = (grid) =>{
     for (let i =0; i < grid.height; i++) {
         for (let j =0; j < grid.width; j++) {
-            grid[i][j].value =0;
+            grid.board[i][j].value =0;
         }
     }
 
@@ -157,23 +157,7 @@ moveRight = (tetromino,grid) => {
 
 
 
-let tetromino = newTetromino(BLOCKS,COLORS,START_X,START_Y)
 
-let grid = newGrid(GRID_WIDTH, GRID_HEIGHT)
-
-
-drawTetromino(tetromino,grid)
-
-setInterval(()=>{
-    if(movable(tetromino,grid, DIRECTION.DOWN)) {
-        moveDown(tetromino, grid) 
-    } else {
-        updateGrid(tetromino,grid)
-        tetromino = newTetromino(BLOCKS,COLORS,START_X,START_Y)
-        drawTetromino(tetromino,grid)
-    }
- 
-},500)
 
 // check rotatable
 
@@ -239,11 +223,47 @@ updateGrid = (tetromino,grid) => {
     })
 }
 
-
+//check full row
 checkFilledRow = (row) => {
     return row.every(v => {
         return v.value !==0
     })
+}
+
+// delete  fielld full row
+deleteRow = (row_index, grid) => {
+    for (let row = row_index; row >0 ; row--) {
+        for (let col = 0; col < 10; col++) {
+            grid.board[row][col].value = grid.board[row - 1][col].value
+            let value = grid.board[row][col].value
+
+            //update fielld 
+            field[grid.board[row][col].index].style.background = value === 0? TRANSPARENT : COLORS[value-1]
+        }
+    }
+}
+
+
+//check grid for delete
+
+checkGrid = (grid) => {
+    grid.board.forEach((row , i) => {
+        if(checkFilledRow(row)) {
+            deleteRow(i,grid)
+            game.score+= 100
+            score_span.innerHTML = game.score
+        }
+    })
+}
+
+// game object
+
+let game = {
+    score : START_SCORE,
+    speed: START_SPEED,
+    level: 1,
+    state: GAME_STATE.END,
+    interval: null
 }
 
 
@@ -253,7 +273,92 @@ checkFilledRow = (row) => {
 
 
 
+// let tetromino = newTetromino(BLOCKS,COLORS,START_X,START_Y)
 
+let tetromino =null
+let score_span =document.querySelector('#score')
+let level_span =document.querySelector('#level')
+
+score_span.innerHTML = game.score
+level_span.innerHTML = game.level
+
+gameLoop = () =>{
+    if(game.state == GAME_STATE.PLAY) {
+        if(movable(tetromino,grid, DIRECTION.DOWN)) {
+            moveDown(tetromino, grid) 
+        } else {
+            updateGrid(tetromino,grid)
+            checkGrid(grid)
+            tetromino = newTetromino(BLOCKS,COLORS,START_X,START_Y)
+            drawTetromino(tetromino,grid)
+
+            if(movable(tetromino,grid, DIRECTION.DOWN)) {
+                drawTetromino(tetromino,grid)
+            } else {
+                game.state =GAME_STATE.END
+                let body = document.querySelector('body') 
+                body.classList.add('end')
+                body.classList.remove('play')
+
+                let result_lv = document.querySelector('#result-level')
+                let result_score = document.querySelector('#result-score')
+
+                result_lv.innerHTML =game.level
+                result_score.innerHTML =game.score
+            }
+
+        }
+    }
+}
+
+
+gameStart = () =>{
+    game.state =GAME_STATE.PLAY
+    tetromino = newTetromino(BLOCKS,COLORS,START_X,START_Y)
+    drawTetromino(tetromino,grid)
+
+    game.interval = setInterval(gameLoop, game.speed)
+}
+
+
+gamePause = () =>{
+    game.state =GAME_STATE.PAUSE
+}
+gameResume = () =>{
+    game.state =GAME_STATE.PLAY
+}
+gameReset = () =>{
+    clearInterval(game.interval)
+    resetGrid(grid)
+    game.score=START_SCORE
+    game.speed=START_SPEED
+    game.state =GAME_STATE.END
+    game.level=1
+    game.interval =null
+    tetromino= null
+    score_span.innerHTML = game.score
+    level_span.innerHTML = game.level
+
+}
+
+
+
+let grid = newGrid(GRID_WIDTH, GRID_HEIGHT)
+
+
+// drawTetromino(tetromino,grid)
+
+// setInterval(()=>{
+//     if(movable(tetromino,grid, DIRECTION.DOWN)) {
+//         moveDown(tetromino, grid) 
+//     } else {
+//         updateGrid(tetromino,grid)
+//         checkGrid(grid)
+//         tetromino = newTetromino(BLOCKS,COLORS,START_X,START_Y)
+//         drawTetromino(tetromino,grid)
+//     }
+ 
+// },500)
 
 
 
@@ -261,6 +366,7 @@ checkFilledRow = (row) => {
 
 document.addEventListener("keydown",e =>{
     e.preventDefault()
+    let body = document.querySelector('body')
     let key=e.which
     switch(key) {
         
@@ -275,6 +381,22 @@ document.addEventListener("keydown",e =>{
             break
         case KEY.UP:
             rotate(tetromino,grid)
+            break
+        case KEY.SPACE:
+            hardDrop(tetromino,grid)
+            break
+        case KEY.P:
+            if(game.state !== GAME_STATE.PAUSE){
+                gamePause()
+                let btn_play= document.querySelector('#btn-play')
+                btn_play.innerHTML='Resume'
+                body.classList.add('pause')
+                body.classList.remove('play')
+            }else{
+                body.classList.add('play')
+                body.classList.remove('pause')
+                gameResume()
+            }
             break
         
     }
@@ -307,7 +429,12 @@ btns.forEach(e => {
                 break
             case 'btn-play': 
                 body.classList.add('play')
-                body.classList.remove('pause')
+                if(game.state===GAME_STATE.PAUSE){
+                    body.classList.remove('pause')
+                    gameResume()
+                    return
+                }
+                gameStart()
                 break
             case 'btn-theme': 
                 body.classList.toggle('dark')
@@ -317,15 +444,20 @@ btns.forEach(e => {
                 how_to.classList.toggle('active')
                 break
             case 'btn-pause': 
+                gamePause()
                 let btn_play= document.querySelector('#btn-play')
                 btn_play.innerHTML='Resume'
                 body.classList.add('pause')
                 body.classList.remove('play')
                 break
-            case 'btn-new-game': 
+            case 'btn-new-game':
+                gameReset()
+
                 body.classList.add('play')
                 body.classList.remove('pause')
                 body.classList.remove('end')
+                gameStart()
+
                 break
 
         }
